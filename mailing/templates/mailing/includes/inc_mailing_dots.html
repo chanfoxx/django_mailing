@@ -1,0 +1,24 @@
+{% load static %}
+{% load custom_filter %}
+{% if user.is_authenticated %}
+<!-- Кнопки для общей страницы рассылок в верхнем правом углу -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'mailing/svg/three-dots-vertical.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'mailing:mailing_complete' %}">
+                <img src="{% static 'mailing/svg/calendar2-week.svg' %}" alt="Icon">
+                Завершенные</a>
+            </li>
+            {% if user == object.creator or user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'mailing:client_list' %}">
+                <img src="{% static 'mailing/svg/person-vcard-fill.svg' %}" alt="Icon">
+                Список получателей</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}

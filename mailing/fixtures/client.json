@@ -1,0 +1,22 @@
+[
+  {
+    "model": "mailing.client",
+    "pk": 3,
+    "fields": {
+      "email": "chanfoxx@yandex.ru",
+      "full_name": "Букреева Ольга Александровна",
+      "comment": "OKE",
+      "creator": 1
+    }
+  },
+  {
+    "model": "mailing.client",
+    "pk": 4,
+    "fields": {
+      "email": "chanfox255@gmail.com",
+      "full_name": "Пашкова Ольга Александровна",
+      "comment": "HEY!",
+      "creator": 1
+    }
+  }
+]
