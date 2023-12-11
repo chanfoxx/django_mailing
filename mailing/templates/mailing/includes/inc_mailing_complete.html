@@ -1,0 +1,19 @@
+{% load static %}
+{% load custom_filter %}
+{% if user.is_authenticated %}
+<!-- Кнопка для рассылки (смотреть) -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'mailing/svg/three-dots.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            {% if user == object.creator or user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'mailing:mailing_detail' object.pk %}">
+                <img src="{% static 'mailing/svg/calendar2-week.svg' %}" alt="Icon"> Просмотреть рассылку</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
