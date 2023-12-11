@@ -1,0 +1,18 @@
+[
+  {
+    "model": "mailing.message",
+    "pk": 3,
+    "fields": {
+      "subject": "50% на все товары",
+      "body": "Тратата"
+    }
+  },
+  {
+    "model": "mailing.message",
+    "pk": 4,
+    "fields": {
+      "subject": "2 товара по цене 1",
+      "body": "Ляляля"
+    }
+  }
+]
