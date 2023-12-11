@@ -1,0 +1,22 @@
+[
+  {
+    "model": "feedback.feedback",
+    "pk": 1,
+    "fields": {
+      "name": "Nick",
+      "phone": "+ 1 202 634 5346",
+      "email": "mnick_am@gmail.com",
+      "message": "Hi, bro!"
+    }
+  },
+  {
+    "model": "feedback.feedback",
+    "pk": 2,
+    "fields": {
+      "name": "John",
+      "phone": "+ 1 207 646 6654",
+      "email": "johnny253@gmail.com",
+      "message": "Helloooooooooo!"
+    }
+  }
+]
