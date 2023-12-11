@@ -1,0 +1,9 @@
+Django
+ipython
+Pillow
+psycopg2
+python-dotenv
+pytils
+crispy-bootstrap5
+django-crontab
+redis
