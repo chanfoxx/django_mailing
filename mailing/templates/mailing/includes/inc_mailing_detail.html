@@ -1,0 +1,22 @@
+{% load static %}
+{% load custom_filter %}
+{% if user.is_authenticated %}
+<!-- Кнопки для конкретной рассылки (изменить, удалить) -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'mailing/svg/three-dots.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'mailing:mailing_update' object.pk %}">
+                <img src="{% static 'mailing/svg/pen.svg' %}" alt="Icon"> Редактировать рассылку</a>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'mailing:mailing_delete' object.pk %}">
+                <img src="{% static 'mailing/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}

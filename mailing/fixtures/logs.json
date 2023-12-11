@@ -1,0 +1,24 @@
+[
+  {
+    "model": "mailing.logs",
+    "pk": 11,
+    "fields": {
+      "date": "2023-12-05T17:33:20.036Z",
+      "attempt_status": 1,
+      "mail_server_response": "OK",
+      "client": 3,
+      "mailing_settings": 9
+    }
+  },
+  {
+    "model": "mailing.logs",
+    "pk": 12,
+    "fields": {
+      "date": "2023-12-05T17:33:20.508Z",
+      "attempt_status": 1,
+      "mail_server_response": "OK",
+      "client": 3,
+      "mailing_settings": 8
+    }
+  }
+]

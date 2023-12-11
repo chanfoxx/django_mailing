@@ -1,0 +1,18 @@
+{% load static %}
+{% if user.is_authenticated %}
+<!-- Кнопки для клиента (смотреть, изменить, удалить) -->
+<div class="d-flex justify-content-end position-relative">
+    {% if user == object.creator or user.is_superuser %}
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'mailing/svg/three-dots.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'mailing:client_delete' object.pk %}">
+                <img src="{% static 'mailing/svg/trash3.svg' %}" alt="Icon"> Удалить</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
