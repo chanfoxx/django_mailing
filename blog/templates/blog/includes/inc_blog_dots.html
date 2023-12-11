@@ -1,0 +1,25 @@
+{% load static %}
+{% load custom_filter %}
+<!-- Кнопки для блоговой записи (смотреть, изменить, удалить) -->
+<div class="d-flex justify-content-end position-relative">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{% static 'mailing/svg/three-dots.svg' %}" alt="Icon">
+        </button>
+        <ul class="dropdown-menu">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'blog:blog_detail' slug=object.slug %}">
+                <img src="{% static 'mailing/svg/chat-heart.svg' %}" alt="Icon"> Просмотреть запись</a>
+            </li>
+            {% endif %}
+            {% if user|has_group:"Контент-менеджер" or user.is_superuser %}
+            <li><a class="dropdown-item" href="{% url 'blog:blog_update' slug=object.slug %}">
+                <img src="{% static 'mailing/svg/pen.svg' %}" alt="Icon"> Редактировать запись</a>
+            </li>
+            <li><a class="dropdown-item" href="{% url 'blog:blog_delete' slug=object.slug %}">
+                <img src="{% static 'mailing/svg/trash3.svg' %}" alt="Icon"> Удалить запись</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

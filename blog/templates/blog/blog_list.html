@@ -1,0 +1,78 @@
+{% extends 'feedback/base.html' %}
+{% load static %}
+{% load custom_filter %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="row g-5">
+    <div class="col-md-8" style="padding-top: 20px; padding-left: 70px;">
+        <h3 class="pb-4 mb-1 fst-italic border-bottom">
+            Наш блог
+        </h3>
+        {% for object in object_list %}
+        {% include 'blog/includes/inc_blog_dots.html' %}
+        <article class="blog-post">
+            <a class="link-underline-dark" href="{% url 'blog:blog_detail' slug=object.slug %}">
+            <h2 class="display-5 link-body-emphasis mb-1">{{ object.title }}</h2></a>
+            <p class="blog-post-meta">{{ object.creation_date }}
+                <img src="{% static 'mailing/svg/person-fill-check.svg' %}" alt="Icon">
+                <a class="link-secondary" href="#">{{ object.creator.first_name }}</a>
+            </p>
+            <p><img src="/media/{{ object.preview }}"
+                    class="img-fluid img-thumbnail thumbnail-box-shadow mb-3" alt="Image"></p>
+            <p>{{ object.description }}</p>
+            <hr>
+            <div class="col mb-3">
+                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                <label class="btn btn-outline-danger mb-2" for="btn-check-outlined">
+                    <img src="{% static 'mailing/svg/heart.svg' %}" alt="Icon"></label><br>
+            </div>
+            {% endfor %}
+        </article>
+    </div>
+    <div class="col-md-4" style="padding-top: 20px;">
+        <!--Создать запись-->
+        {% if user|has_group:"Контент-менеджер" %}
+        <div class="mb-3" style="text-align: center;">
+            <a class="link-secondary" style="text-align: center;"
+               href="{% url 'blog:blog_create' %}">
+                <img src="{% static 'mailing/svg/plus-square.svg' %}" alt="Icon">
+            </a>
+        </div>
+        {% endif %}
+        <div class="position-sticky" style="top: 2rem;">
+            <div class="p-4 mb-3 bg-body-tertiary rounded">
+                <h4 class="fst-italic">About</h4>
+                <p class="mb-0">Здесь можно почитать наши новости.</p>
+            </div>
+            <div>
+                <h4 class="fst-italic">Список постов</h4>
+                {% for object in object_list %}
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="d-flex flex-column flex-lg-row gap-3 align-items-start
+                        align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                           href="{% url 'blog:blog_detail' slug=object.slug %}">
+                            <img src="/media/{{ object.preview }}"
+                                 class="img-fluid img-thumbnail thumbnail-box-shadow mb-3"
+                                 width="30%" height="100%" alt="Image">
+                            <div class="col-lg-8">
+                                <h6 class="mb-0">{{ object.title }}</h6>
+                                <small class="text-body-secondary">{{ object.creation_date }}</small>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            <div class="p-4">
+                <h4 class="fst-italic">Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li><a class="link-secondary" href="https://github.com/chanfoxx">GitHub</a></li>
+                    <li><a class="link-secondary" href="https://sky.pro/">SkyPro</a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
