@@ -1,0 +1,87 @@
+{% load static %}
+{% load custom_filter %}
+{% include 'feedback/includes/inc_main_head.html' %}
+<!-- Верхнее меню -->
+<nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+                aria-controls="#offcanvas" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="#offcanvas" aria-labelledby="#offcanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="#offcanvasLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav flex-grow-1 justify-content-between">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'blog:main' %}">Главная</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'mailing:mailing_list' %}">
+                        <img src="{% static 'mailing/svg/envelope-arrow-up-fill.svg' %}" alt="Icon"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'blog:blog_list' %}">Блог</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'feedback:feedback' %}">Контакты</a></li>
+                    {% if user|has_group:"Менеджер" or user.is_superuser %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:users' %}">
+                        <img src="{% static 'mailing/svg/people-all.svg' %}" alt="Icon"></a></li>
+                    {% endif %}
+                    {% if user.is_authenticated and not user|has_group:"Менеджер" %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">
+                        Профиль <img src="{% static 'mailing/svg/person-circle.svg' %}" alt="Icon"></a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">
+                        Выход <img src="{% static 'mailing/svg/box-arrow-right.svg' %}" alt="Icon"></a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">
+                        Вход <img src="{% static 'mailing/svg/box-arrow-in-right.svg' %}" alt="Icon"></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">
+                        Регистрация <img src="{% static 'mailing/svg/person-badge.svg' %}" alt="Icon"></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+<!-- Нижний блок -->
+<footer class="container py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <a class="nav-link mb-2" href="{% url 'blog:main' %}">
+                <img src="{% static 'mailing/svg/rocket.svg' %}" alt="Icon">
+            </a>
+            <small class="d-block mb-3 text-body-secondary">&copy; 2023 – {% now 'Y' %}</small>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="col-6 col-md">
+            <h5>Рассылки</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="{% url 'mailing:mailing_list' %}">Мои рассылки</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Мои клиенты</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Мои сообщения</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        <div class="col-6 col-md">
+            <h5>О нас</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="link-secondary text-decoration-none" href="#">О нас</a></li>
+                {% if user.is_authenticated %}
+                <li><a class="link-secondary text-decoration-none" href="{% url 'blog:blog_list' %}">Наш блог</a></li>
+                <li><a class="link-secondary text-decoration-none" href="{% url 'mailing:mailing_list' %}">Рассылка</a></li>
+                {% endif %}
+                <li><a class="link-secondary text-decoration-none" href="{% url 'feedback:feedback' %}">Контакты</a></li>
+                <li><a class="link-secondary text-decoration-none" href="#">Служба поддержки</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'mailing/js/bootstrap.bundle.min.js' %}"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>
