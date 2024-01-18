@@ -1,4 +1,3 @@
-from typing import Optional
 from django.db import models
 from django.conf import settings
 
@@ -7,7 +6,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Client(models.Model):
-    """Модель клиента сервиса."""
+    """ Модель клиента сервиса. """
     email = models.EmailField(max_length=100, verbose_name='Контактный e-mail')
     full_name = models.CharField(max_length=250, verbose_name='ФИО', **NULLABLE)
     comment = models.TextField(verbose_name='Комментарий', **NULLABLE)
@@ -17,33 +16,34 @@ class Client(models.Model):
         verbose_name='Продавец', default=53, **NULLABLE)
 
     def __str__(self) -> str:
-        """Возвращает строковое представление о классе клиента сервиса."""
+        """ Возвращает строковое представление о классе клиента сервиса. """
         return f'{self.full_name} ({self.email})'
 
     class Meta:
-        """Метаданные для модели клиента сервиса."""
+        """ Метаданные для модели клиента сервиса. """
         verbose_name = 'Клиент сервиса'
         verbose_name_plural = 'Клиенты сервиса'
 
 
 class Message(models.Model):
-    """Модель сообщения рассылки."""
+    """ Модель сообщения рассылки. """
     subject = models.CharField(max_length=150, verbose_name='Тема письма',
                                **NULLABLE)
     body = models.TextField(verbose_name='Тело письма', **NULLABLE)
 
     def __str__(self):
-        """Возвращает строковое представление о классе сообщения рассылки."""
+        """ Возвращает строковое представление о классе сообщения рассылки. """
         return f'Тема рассылки: "{self.subject}".'
 
     class Meta:
-        """Метаданные для модели сообщения рассылки."""
+        """ Метаданные для модели сообщения рассылки. """
         verbose_name = 'Сообщение рассылки'
         verbose_name_plural = 'Сообщения рассылок'
 
 
 class Mailing(models.Model):
-    """Модель настроек рассылки."""
+    """ Модель настроек рассылки. """
+
     # Выбор для поля "frequency".
     ONCE_A_DAY = "1/1"
     WEEKLY = "1/7"
@@ -75,7 +75,7 @@ class Mailing(models.Model):
         max_length=2, choices=STATUS_MAILING,
         default=CREATED, verbose_name='Статус рассылки')
 
-    client = models.ManyToManyField(Client, verbose_name='Получатель')
+    clients = models.ManyToManyField(Client, verbose_name='Получатель')
     message = models.ForeignKey(
         Message, on_delete=models.CASCADE, verbose_name='Контент')
 
@@ -83,16 +83,12 @@ class Mailing(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
         verbose_name='Продавец', default=1, **NULLABLE)
 
-    @property
-    def logs(self) -> Optional['Logs']:
-        return self.logs_set.get()
-
     def __str__(self):
-        """Возвращает строковое представление о классе настроек рассылки."""
+        """ Возвращает строковое представление о классе настроек рассылки. """
         return f'{self.start_time}:{self.end_time} - {self.frequency}'
 
     class Meta:
-        """Метаданные для модели настроек рассылки."""
+        """ Метаданные для модели настроек рассылки. """
         verbose_name = 'Настройки рассылки.'
         verbose_name_plural = 'Настройки рассылок'
 
@@ -102,7 +98,8 @@ class Mailing(models.Model):
 
 
 class Logs(models.Model):
-    """Модель логов рассылки."""
+    """ Модель логов рассылки. """
+
     # Выбор для поля "attempt_status".
     SUCCESS = 1
     FAILURE = 2
@@ -120,16 +117,15 @@ class Logs(models.Model):
     mail_server_response = models.CharField(verbose_name='Ответ почтового сервера',
                                             **NULLABLE)
 
-    client = models.ForeignKey(
-        Client, on_delete=models.CASCADE, verbose_name='Получатель')
     mailing_settings = models.ForeignKey(
-        Mailing, on_delete=models.CASCADE, verbose_name='Настройки')
+        Mailing, on_delete=models.CASCADE, verbose_name='Настройки',
+        related_name='logs')
 
     def __str__(self):
-        """Возвращает строковое представление о классе логов рассылки."""
+        """ Возвращает строковое представление о классе логов рассылки. """
         return f'{self.date}: {self.attempt_status}, {self.mail_server_response}'
 
     class Meta:
-        """Метаданные для модели логов рассылки."""
+        """ Метаданные для модели логов рассылки. """
         verbose_name = 'Логи рассылки'
         verbose_name_plural = 'Логи рассылок'
