@@ -55,6 +55,10 @@
 - либо через команду в терминале: python3 manage.py runserver
 11. Запустить crontab для автоматической рассылки: python3 manage.py crontab add
 12. Выключить автоматическую рассылку: python3 manage.py crontab remove
+13. DOCKER:
+- docker-compose build (собрать образ)
+- docker-compose up (запустить контейнеры)
+- control + C (остановить)
 
 ## Пример веб-приложения
 
