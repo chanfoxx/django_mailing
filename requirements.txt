@@ -7,3 +7,4 @@ pytils
 crispy-bootstrap5
 django-crontab
 redis
+gunicorn
