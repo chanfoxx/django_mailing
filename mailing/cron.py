@@ -1,5 +1,7 @@
 from datetime import timedelta
+
 from django.utils import timezone
+
 from mailing.models import Mailing
 from mailing.services import mailing_send
 
@@ -25,7 +27,7 @@ def mailing_in_frequency() -> None:
 
     for mail in mailing:
         # Проверяет наличие логов.
-        if mail.logs:
+        if mail.logs.exists():
             # Если логи есть:
             # Вычисляет разницу во времени от последнего лога.
             date_diff = current_datetime - mail.logs.last().date
