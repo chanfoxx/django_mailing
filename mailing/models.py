@@ -13,7 +13,7 @@ class Client(models.Model):
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
-        verbose_name='Продавец', default=53, **NULLABLE)
+        verbose_name='Продавец', **NULLABLE)
 
     def __str__(self) -> str:
         """ Возвращает строковое представление о классе клиента сервиса. """
@@ -81,7 +81,7 @@ class Mailing(models.Model):
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
-        verbose_name='Продавец', default=1, **NULLABLE)
+        verbose_name='Продавец', **NULLABLE)
 
     def __str__(self):
         """ Возвращает строковое представление о классе настроек рассылки. """
