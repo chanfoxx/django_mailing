@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-x^8(fn%1qaio^1lqg*aqvq!c%_0y!ov#wka^1-zjf7rddes^*y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -130,10 +130,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '/static/'),
-]
 
 # Media files (Video, Audio, Images)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#media-url
